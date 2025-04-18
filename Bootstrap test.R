@@ -1,14 +1,14 @@
 ##bootstrap test
 for i in `seq 1 1000`
 do
-shuf -n94 -r clean.fam > test${i} #sampling with put back
+shuf -n166 -r clean.fam > test${i} #sampling with put back
 awk '{print $1,$2}' test${i} > tmp${i}
 awk '{print $6}' test${i} > phe${i}
 done
 ## GWAS for 1000 times
 for j in `seq 1 1000`
 do
-  for i in `seq 1 94`
+  for i in `seq 1 166`
   do
   sed -n ''"$i"'p' tmp${j} > p${i} 
   plink -bfile clean --keep p${i} --make-bed --out tmp${i}
@@ -28,6 +28,6 @@ do
 cat result${i}.assoc.txt | awk '{if($13 <= 1.3e-9) print '"$i"',$3,$13}' | sort -gk2  >> target_all
 done
 
-awk '{if($2 >= 14848429 && $2 <= 14853817) print $0}' target_all > tmp
+awk '{if($2 >= 5731147 && $2 <= 5732809) print $0}' target_all > tmp
 awk '{print $1}' tmp | sort | uniq | wc
 
